@@ -9,6 +9,8 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,14 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class RestaurantTest {
 
     Restaurant restaurant;
-    @Spy
-    Restaurant restaurant1; //Restaurant restaurant1=org.mockito.Mockito.spy(Restaurant.class)
 
     //REFACTOR ALL THE REPEATED LINES OF CODE
-    LocalTime openingTime = LocalTime.parse("10:30:00");
-    LocalTime closingTime = LocalTime.parse("22:00:00");
-
     private Restaurant getRestaurantObject() {
+
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
         return new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
     }
     private void addMenu() {
@@ -36,13 +36,14 @@ class RestaurantTest {
     @Test
     public void is_restaurant_open_should_return_true_if_time_is_between_opening_and_closing_time(){
         //WRITE UNIT TEST CASE HERE
-        LocalTime getCurrentTimes=LocalTime.parse("20:00:00");
-        Mockito.when(restaurant1.getCurrentTime()).thenReturn(getCurrentTimes);
+        Restaurant restaurant = getRestaurantObject();
 
-        //restaurant1=new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
+        restaurant=org.mockito.Mockito.spy(restaurant);
 
+        LocalTime currentTimes=LocalTime.parse("11:30:00");
+        Mockito.when(restaurant.getCurrentTime()).thenReturn(currentTimes);
 
-        Boolean op=restaurant1.isRestaurantOpen(closingTime,openingTime);
+        Boolean op=restaurant.isRestaurantOpen();
 
         assertEquals(true,op);
         assertTrue(op);
@@ -51,10 +52,14 @@ class RestaurantTest {
     @Test
     public void is_restaurant_open_should_return_false_if_time_is_outside_opening_and_closing_time(){
         //WRITE UNIT TEST CASE HERE
-        LocalTime getCurrentTimes=LocalTime.parse("23:30:00");
-        Mockito.when(restaurant1.getCurrentTime()).thenReturn(getCurrentTimes);
+        Restaurant restaurant = getRestaurantObject();
 
-        Boolean op=restaurant1.isRestaurantOpen(closingTime,openingTime);
+        restaurant=org.mockito.Mockito.spy(restaurant);
+
+        LocalTime currentTime=LocalTime.parse("23:00:00");
+        Mockito.when(restaurant.getCurrentTime()).thenReturn(currentTime);
+
+        Boolean op=restaurant.isRestaurantOpen();
 
         assertEquals(false,op);
         assertFalse(op);
@@ -70,6 +75,7 @@ class RestaurantTest {
 
         restaurant = getRestaurantObject();
         addMenu();
+
 
         int initialMenuSize = restaurant.getMenu().size();
         restaurant.addToMenu("Sizzling brownie",319);
@@ -100,4 +106,6 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
 }

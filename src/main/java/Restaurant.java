@@ -19,11 +19,12 @@ public class Restaurant {
         this.closingTime = closingTime;
     }
 
-    public boolean isRestaurantOpen(LocalTime closingTime,LocalTime openingTime) {
+    public boolean isRestaurantOpen() {
         //return true;
         //DELETE ABOVE STATEMENT AND WRITE CODE HERE
-        return (getCurrentTime().compareTo(closingTime) < 0 || getCurrentTime().compareTo(closingTime)==0) &&
-                (getCurrentTime().compareTo(openingTime) > 0 || getCurrentTime().compareTo(openingTime)==0);
+        return  (getCurrentTime().isBefore(closingTime) || getCurrentTime().equals(closingTime)) &&
+                (getCurrentTime().isAfter(openingTime) || getCurrentTime().equals(openingTime));
+        //return (getCurrentTime().compareTo(closingTime) < 0 || getCurrentTime().compareTo(closingTime)==0) && (getCurrentTime().compareTo(openingTime) > 0 || getCurrentTime().compareTo(openingTime)==0);
     }
 
     public LocalTime getCurrentTime(){ return  LocalTime.now(); }
@@ -67,5 +68,8 @@ public class Restaurant {
     public String getName() {
         return name;
     }
+
+    //
+
 
 }
