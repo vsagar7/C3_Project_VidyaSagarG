@@ -10,6 +10,8 @@ public class Restaurant {
     public LocalTime closingTime;
     private List<Item> menu = new ArrayList<Item>();
 
+    public int orderCost=0;
+
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
         this.location = location;
@@ -68,5 +70,18 @@ public class Restaurant {
     }
 
     //
+
+    public int userOrderCost(String... userItems) throws itemNotFoundException {
+
+        if(userItems.length==0)
+            return 0;
+        else {
+            for (String itemName : userItems) {
+                Item item = findItemByName(itemName);
+                orderCost+=item.getPrice();
+            }
+            return orderCost;
+        }
+    }
 
 }
