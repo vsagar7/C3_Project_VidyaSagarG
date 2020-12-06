@@ -93,4 +93,30 @@ class RestaurantTest {
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
+    //>>>>>>>>>>>>>>>>>>>>>>USER: Selecting items in Menu and getting total cost <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @Test
+    public void when_user_order_cost_method_is_called_with_items_Sweet_corn_Soup_and_Vegetable_lasagne_from_menu_should_give_order_cost_as_388() throws itemNotFoundException {
+
+        String[] userItems= {"Sweet corn soup","Vegetable lasagne"};
+
+        int orderCost=restaurant.userOrderCost(userItems);
+
+        assertEquals(388,orderCost);
+
+    }
+
+    @Test
+    public void when_user_order_cost_method_is_called_with_no_items_method_should_return_0() throws itemNotFoundException {
+
+        String[] userItems= {};
+
+        int orderCost=restaurant.userOrderCost(userItems);
+
+        assertEquals(0,orderCost);
+
+    }
+
+    //<<<<<<<<<<<<<<<<<<<<USER: Selecting items in Menu and getting total cost>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 }
